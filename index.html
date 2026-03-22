@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kip's Card Shop — Los Altos, CA. Premier trading card shop carrying Pokémon, sports cards, graded slabs, and memorabilia.">
+  <title>Kip's Card Shop | Los Altos, CA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: #fff; color: #0D0D1A; font-family: 'DM Sans', sans-serif; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    ul { list-style: none; }
+
+    :root {
+      --navy: #1B2B6B;
+      --gold: #B8920A;
+      --gold-light: #D4A820;
+      --text: #0D0D1A;
+      --muted: rgba(13,13,26,0.5);
+      --border: rgba(13,13,26,0.1);
+      --surface: #F8F8FA;
+      --pad: clamp(60px,8vw,120px);
+      --max: 1160px;
+    }
+
+    /* ── NAV ── */
+    #nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 24px 40px;
+      transition: background 0.3s, padding 0.3s, box-shadow 0.3s;
+    }
+    #nav.scrolled {
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(12px);
+      padding: 14px 40px;
+      box-shadow: 0 1px 0 var(--border);
+    }
+    .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 0.06em; color: var(--gold); line-height: 1; }
+    .nav-logo span { display: block; font-family: 'DM Sans', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); margin-top: 2px; }
+    .nav-links { display: flex; gap: 4px; }
+    .nav-links a { font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); padding: 8px 16px; border-radius: 4px; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    .nav-cta { font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 0.1em; padding: 10px 22px; background: var(--navy); color: #fff; border-radius: 4px; transition: background 0.2s; }
+    .nav-cta:hover { background: #253d8a; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; padding: 8px; cursor: pointer; background: none; border: none; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; }
+
+    /* ── HERO ── */
+    /* 280vh gives plenty of scroll distance for the animation */
+    #hero { position: relative; height: 280vh; }
+    #hero-sticky {
+      position: sticky; top: 0; height: 100vh;
+      background: #fff;
+      overflow: hidden;
+    }
+    /* Video sits naturally at its own proportions, centered on white */
+    #hero-video {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      width: 100%; height: 100%;
+      object-fit: contain;
+      object-position: center center;
+      background: #fff;
+      pointer-events: none;
+    }
+    /* White fade at bottom for smooth transition into content */
+    #hero-sticky::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 18%; background: linear-gradient(to top, #fff, transparent);
+      z-index: 2; pointer-events: none;
+    }
+    /* Title at bottom — never overlaps the pack */
+    #hero-text {
+      position: absolute; bottom: 44px; left: 0; right: 0;
+      text-align: center; z-index: 5; pointer-events: none;
+      animation: fadeUp 0.8s ease 0.3s both;
+    }
+    #hero-text h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(32px, 4vw, 54px);
+      letter-spacing: 0.1em; color: var(--navy); line-height: 1;
+    }
+    #hero-text p {
+      font-size: clamp(9px, 1vw, 12px); letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--muted); margin-top: 6px;
+    }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+    /* Scroll hint */
+    #scroll-hint {
+      position: absolute; bottom: 110px; left: 50%; transform: translateX(-50%);
+      z-index: 5; display: flex; flex-direction: column; align-items: center; gap: 7px;
+      animation: fadeUp 0.8s ease 0.9s both;
+    }
+    #scroll-hint span { font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); }
+    .scroll-ring { width: 20px; height: 32px; border: 1.5px solid var(--gold); border-radius: 10px; display: flex; justify-content: center; padding-top: 5px; }
+    .scroll-dot { width: 3px; height: 5px; background: var(--gold); border-radius: 2px; animation: sd 2s ease-in-out infinite; }
+    @keyframes sd { 0%,100%{transform:translateY(0);opacity:1;} 80%{transform:translateY(8px);opacity:0;} }
+</style>
+  <style>
+    /* ── TICKER ── */
+    .ticker-wrap { background: var(--navy); overflow: hidden; padding: 10px 0; }
+    .ticker { display: flex; width: max-content; animation: tick 28s linear infinite; }
+    .ticker:hover { animation-play-state: paused; }
+    .ticker-item { display: flex; align-items: center; gap: 24px; padding: 0 24px; font-family: 'Bebas Neue', sans-serif; font-size: 14px; letter-spacing: 0.12em; color: rgba(255,255,255,0.85); white-space: nowrap; }
+    .ticker-item .sep { color: var(--gold-light); }
+    @keyframes tick { 0%{transform:translateX(0);} 100%{transform:translateX(-50%);} }
+
+    /* ── SECTIONS ── */
+    .section { padding: var(--pad) 0; }
+    .container { max-width: var(--max); margin: 0 auto; padding: 0 clamp(20px,4vw,48px); }
+    .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+    .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(32px,4.5vw,52px); letter-spacing: 0.04em; color: var(--text); line-height: 1; }
+    .rule { width: 48px; height: 2px; background: var(--navy); margin: 20px 0; }
+    .rule.center { margin: 20px auto; }
+    .body-text { font-size: 16px; line-height: 1.75; color: var(--muted); max-width: 580px; }
+    .reveal { opacity:0; transform:translateY(28px); transition:opacity .65s ease, transform .65s ease; }
+    .reveal.in { opacity:1; transform:none; }
+    .reveal:nth-child(2){transition-delay:.08s;}
+    .reveal:nth-child(3){transition-delay:.16s;}
+    .reveal:nth-child(4){transition-delay:.24s;}
+
+    /* ── CARRY GRID ── */
+    .carry-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:20px; margin-top:48px; }
+    .carry-card { background:var(--surface); border-radius:12px; border:1px solid var(--border); padding:32px 28px; transition:box-shadow .25s,transform .25s; }
+    .carry-card:hover { transform:translateY(-4px); box-shadow:0 12px 40px rgba(0,0,0,.07); }
+    .carry-icon { font-size:36px; margin-bottom:16px; }
+    .carry-title { font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:.06em; color:var(--navy); margin-bottom:8px; }
+    .carry-desc { font-size:14px; line-height:1.65; color:var(--muted); }
+
+    /* ── ABOUT ── */
+    .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:72px; align-items:center; }
+    .about-img-box { aspect-ratio:4/5; border-radius:16px; overflow:hidden; }
+    .about-img-box img { width:100%; height:100%; object-fit:cover; }
+    .about-badge { display:inline-flex; align-items:center; gap:8px; background:rgba(27,43,107,.07); border:1px solid rgba(27,43,107,.15); border-radius:100px; padding:6px 14px; font-size:12px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--navy); margin-bottom:20px; }
+    .services-list { display:flex; flex-direction:column; gap:12px; margin-top:28px; }
+    .service-item { display:flex; align-items:flex-start; gap:14px; }
+    .service-dot { width:6px; height:6px; border-radius:50%; background:var(--gold); flex-shrink:0; margin-top:7px; }
+    .service-text { font-size:15px; line-height:1.5; color:var(--muted); }
+
+    /* ── HOURS & CONTACT ── */
+    .info-grid { display:grid; grid-template-columns:1fr 1fr; gap:40px; }
+    .info-box { background:var(--surface); border-radius:12px; border:1px solid var(--border); padding:36px; }
+    .info-box h3 { font-family:'Bebas Neue',sans-serif; font-size:24px; letter-spacing:.06em; color:var(--navy); margin-bottom:20px; }
+    .hours-row { display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--border); font-size:14px; }
+    .hours-row:last-child { border-bottom:none; }
+    .hours-row .day { font-weight:500; color:var(--text); }
+    .hours-row .time { color:var(--muted); }
+    .hours-row.today .day, .hours-row.today .time { color:var(--navy); font-weight:700; }
+    .contact-list { display:flex; flex-direction:column; gap:16px; }
+    .contact-item { display:flex; align-items:center; gap:14px; font-size:14px; color:var(--muted); }
+    .contact-icon { width:36px; height:36px; background:rgba(27,43,107,.07); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
+    .contact-link { color:var(--navy); font-weight:500; }
+    .contact-link:hover { color:var(--gold); }
+
+    /* ── FOOTER ── */
+    footer { background:var(--navy); color:rgba(255,255,255,.7); padding:48px 0 28px; }
+    .footer-inner { display:flex; justify-content:space-between; align-items:flex-start; gap:40px; flex-wrap:wrap; }
+    .footer-brand { font-family:'Bebas Neue',sans-serif; font-size:28px; letter-spacing:.06em; color:var(--gold-light); margin-bottom:6px; }
+    .footer-tagline { font-size:12px; letter-spacing:.2em; text-transform:uppercase; opacity:.5; }
+    .footer-links { display:flex; flex-direction:column; gap:8px; }
+    .footer-links a { font-size:13px; opacity:.6; transition:opacity .2s; }
+    .footer-links a:hover { opacity:1; }
+    .footer-social { display:flex; gap:10px; margin-top:16px; }
+    .footer-social a { width:34px; height:34px; border:1px solid rgba(255,255,255,.15); border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:14px; }
+    .footer-social a:hover { background:rgba(255,255,255,.08); }
+    .footer-bottom { border-top:1px solid rgba(255,255,255,.1); margin-top:40px; padding-top:20px; font-size:12px; opacity:.4; text-align:center; }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:900px){ .carry-grid{grid-template-columns:1fr 1fr;} .about-grid{grid-template-columns:1fr;} .info-grid{grid-template-columns:1fr;} }
+    @media(max-width:600px){
+      .carry-grid{grid-template-columns:1fr;}
+      #nav{padding:16px 20px;}
+      #nav.scrolled{padding:12px 20px;}
+      .nav-links,.nav-cta{display:none;}
+      .hamburger{display:flex;}
+      .nav-links.open{display:flex;flex-direction:column;position:fixed;top:60px;left:0;right:0;background:#fff;padding:20px;box-shadow:0 8px 20px rgba(0,0,0,.1);z-index:99;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="index.html" class="nav-logo">KIP'S<span>Card Shop · Los Altos</span></a>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="#carry">What We Carry</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#visit">Visit</a></li>
+  </ul>
+  <a href="#visit" class="nav-cta">Visit Us</a>
+  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div id="hero-sticky">
+    <video id="hero-video" src="hero-video.mp4" muted playsinline preload="auto"></video>
+    <div id="hero-text">
+      <h1>KIP'S CARD SHOP</h1>
+      <p>Sports Cards · Pokémon · Graded Slabs · Memorabilia · Los Altos, CA</p>
+    </div>
+    <div id="scroll-hint">
+      <div class="scroll-ring"><div class="scroll-dot"></div></div>
+      <span>Scroll</span>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap" aria-hidden="true">
+  <div class="ticker">
+    <div class="ticker-item">SPORTS CARDS<span class="sep">◆</span></div>
+    <div class="ticker-item">POKÉMON TCG<span class="sep">◆</span></div>
+    <div class="ticker-item">GRADED SLABS — PSA · BGS · CGC<span class="sep">◆</span></div>
+    <div class="ticker-item">VINTAGE &amp; MODERN SETS<span class="sep">◆</span></div>
+    <div class="ticker-item">SPORTS MEMORABILIA<span class="sep">◆</span></div>
+    <div class="ticker-item">WE BUY &amp; TRADE COLLECTIONS<span class="sep">◆</span></div>
+    <div class="ticker-item">GRADING SUBMISSIONS — PSA · JSA · BGS<span class="sep">◆</span></div>
+    <div class="ticker-item">SPORTS CARDS<span class="sep">◆</span></div>
+    <div class="ticker-item">POKÉMON TCG<span class="sep">◆</span></div>
+    <div class="ticker-item">GRADED SLABS — PSA · BGS · CGC<span class="sep">◆</span></div>
+    <div class="ticker-item">VINTAGE &amp; MODERN SETS<span class="sep">◆</span></div>
+    <div class="ticker-item">SPORTS MEMORABILIA<span class="sep">◆</span></div>
+    <div class="ticker-item">WE BUY &amp; TRADE COLLECTIONS<span class="sep">◆</span></div>
+    <div class="ticker-item">GRADING SUBMISSIONS — PSA · JSA · BGS<span class="sep">◆</span></div>
+  </div>
+</div>
+
+<!-- WHAT WE CARRY -->
+<section class="section" id="carry">
+  <div class="container">
+    <p class="eyebrow reveal">Inventory</p>
+    <h2 class="section-title reveal">What We Carry</h2>
+    <div class="rule reveal"></div>
+    <p class="body-text reveal">Whether you're completing a vintage set, hunting today's hottest rookies, or just want to rip some packs — Kip's has you covered.</p>
+    <div class="carry-grid">
+      <div class="carry-card reveal">
+        <div class="carry-icon">⚡</div>
+        <div class="carry-title">Pokémon TCG</div>
+        <p class="carry-desc">Singles, booster packs, elite trainer boxes, and sealed products spanning vintage Base Set all the way to today's newest releases.</p>
+      </div>
+      <div class="carry-card reveal">
+        <div class="carry-icon">🏆</div>
+        <div class="carry-title">Sports Cards</div>
+        <p class="carry-desc">Baseball, basketball, football, and hockey — vintage stars, modern rookies, refractors, and autographs across all major brands.</p>
+      </div>
+      <div class="carry-card reveal">
+        <div class="carry-icon">🔖</div>
+        <div class="carry-title">Graded Slabs</div>
+        <p class="carry-desc">PSA, BGS, and CGC graded cards for the serious collector. We also help you submit your cards for grading — we do all the work.</p>
+      </div>
+      <div class="carry-card reveal">
+        <div class="carry-icon">⭐</div>
+        <div class="carry-title">Memorabilia</div>
+        <p class="carry-desc">Signed items, game-used pieces, framed displays, and authenticated sports collectibles from your favorite athletes.</p>
+      </div>
+      <div class="carry-card reveal">
+        <div class="carry-icon">📦</div>
+        <div class="carry-title">Packs &amp; Boxes</div>
+        <p class="carry-desc">Deep inventory of sealed packs and boxes — vintage and modern, Pokémon and sports. Always rotating, always fresh.</p>
+      </div>
+      <div class="carry-card reveal">
+        <div class="carry-icon">🤝</div>
+        <div class="carry-title">Buy &amp; Trade</div>
+        <p class="carry-desc">We buy and trade collections. Bring in your cards — if the offer is right, we're interested. Always fair, always honest.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT CISCO -->
+<section class="section" id="about" style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-box reveal">
+        <img src="cisco.jpg" alt="Cisco — Owner of Kip's Card Shop">
+      </div>
+      <div>
+        <div class="about-badge reveal">About the Owner</div>
+        <h2 class="section-title reveal">A Childhood Dream<br>Turned Reality</h2>
+        <div class="rule reveal"></div>
+        <p class="body-text reveal">Cisco, a Los Altos Hills resident, turned his lifelong passion for collecting into Kip's Card Shop — the Bay Area's most welcoming spot for card collectors of all levels.</p>
+        <p class="body-text reveal" style="margin-top:16px;">Featured in the <em>Los Altos Online</em>, Cisco built Kip's on a simple idea: a shop where collectors feel at home, get fair deals, and always find something special.</p>
+        <div class="services-list">
+          <div class="service-item reveal"><div class="service-dot"></div><span class="service-text">Expert grading consultation — PSA, JSA, and BGS submissions handled for you</span></div>
+          <div class="service-item reveal"><div class="service-dot"></div><span class="service-text">Helping investors build and grade valuable collections</span></div>
+          <div class="service-item reveal"><div class="service-dot"></div><span class="service-text">Deep inventory of vintage and modern cards — always fresh stock</span></div>
+          <div class="service-item reveal"><div class="service-dot"></div><span class="service-text">Happy to track down specific cards or sets — just ask!</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOURS & CONTACT -->
+<section class="section" id="visit">
+  <div class="container">
+    <p class="eyebrow reveal" style="text-align:center;">Find Us</p>
+    <h2 class="section-title reveal" style="text-align:center;">Hours &amp; Contact</h2>
+    <div class="rule center reveal"></div>
+    <div class="info-grid" style="margin-top:48px;">
+      <div class="info-box reveal">
+        <h3>Hours of Operation</h3>
+        <div class="hours-row" id="hr-mon"><span class="day">Monday</span><span class="time">Closed</span></div>
+        <div class="hours-row" id="hr-tue"><span class="day">Tuesday</span><span class="time">9:00 AM – 3:00 PM</span></div>
+        <div class="hours-row" id="hr-wed"><span class="day">Wednesday</span><span class="time">12:00 PM – 6:00 PM</span></div>
+        <div class="hours-row" id="hr-thu"><span class="day">Thursday</span><span class="time">12:00 PM – 6:00 PM</span></div>
+        <div class="hours-row" id="hr-fri"><span class="day">Friday</span><span class="time">12:00 PM – 8:00 PM</span></div>
+        <div class="hours-row" id="hr-sat"><span class="day">Saturday</span><span class="time">10:00 AM – 5:00 PM</span></div>
+        <div class="hours-row" id="hr-sun"><span class="day">Sunday</span><span class="time">10:00 AM – 5:00 PM</span></div>
+      </div>
+      <div class="info-box reveal">
+        <h3>Get in Touch</h3>
+        <div class="contact-list">
+          <div class="contact-item">
+            <div class="contact-icon">📍</div>
+            <div>648 Fremont Ave (next to Wildberry Yogurt)<br>Rancho Shopping Center, Los Altos, CA 94024</div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📞</div>
+            <a href="tel:6509352094" class="contact-link">(650) 935-2094</a>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">✉️</div>
+            <a href="mailto:info@kips-cards.com" class="contact-link">info@kips-cards.com</a>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📷</div>
+            <a href="https://www.instagram.com/kipscardshop/" target="_blank" class="contact-link">@kipscardshop</a>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon" style="font-weight:700;font-size:13px;">f</div>
+            <a href="https://www.facebook.com/profile.php?id=100076283525787" target="_blank" class="contact-link">Facebook</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">KIP'S CARD SHOP</div>
+        <div class="footer-tagline">Los Altos, CA · Est. 2009</div>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/kipscardshop/" target="_blank" aria-label="Instagram">📷</a>
+          <a href="https://www.facebook.com/profile.php?id=100076283525787" target="_blank" aria-label="Facebook">f</a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <a href="#carry">What We Carry</a>
+        <a href="#about">About Cisco</a>
+        <a href="#visit">Hours &amp; Contact</a>
+        <a href="mailto:info@kips-cards.com">Email Us</a>
+      </div>
+      <div style="font-size:13px;line-height:1.9;opacity:.6;">
+        648 Fremont Ave<br>
+        Rancho Shopping Center<br>
+        Los Altos, CA 94024<br>
+        (650) 935-2094
+      </div>
+    </div>
+    <div class="footer-bottom">© 2025 Kip's Card Shop. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+// NAV scroll state
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+
+// Hamburger menu
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('nav-links').classList.toggle('open');
+});
+
+// Highlight today's hours
+const dayMap = { 0:'sun', 1:'mon', 2:'tue', 3:'wed', 4:'thu', 5:'fri', 6:'sat' };
+const todayRow = document.getElementById('hr-' + dayMap[new Date().getDay()]);
+if (todayRow) todayRow.classList.add('today');
+
+// Scroll reveal
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+// ── FRAME-BAKED SCROLL ANIMATION ──
+// Pre-bakes every frame into GPU-resident ImageBitmap objects at load time.
+// On scroll, drawImage() from GPU memory = zero decode lag, silky smooth.
+(function () {
+  const video   = document.getElementById('hero-video');
+  const hero    = document.getElementById('hero');
+  if (!video || !hero) return;
+
+  const FRAMES  = 90; // 90 frames across 280vh = smooth
+  const bitmaps = [];
+  let   baked   = false;
+  let   curIdx  = -1;
+
+  // --- Canvas setup ---
+  const canvas  = document.createElement('canvas');
+  const ctx     = canvas.getContext('2d');
+  canvas.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;background:#fff;';
+  // Insert canvas; hide video element
+  video.style.display = 'none';
+  video.parentNode.insertBefore(canvas, video);
+
+  function resize() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize, { passive: true });
+
+  // Draw a bitmap centered on white
+  function drawBitmap(bmp) {
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    if (!bmp) return;
+    const cw = canvas.width, ch = canvas.height;
+    const ar = bmp.width / bmp.height;
+    let dw, dh;
+    if (cw / ch > ar) { dh = ch; dw = dh * ar; }
+    else              { dw = cw; dh = dw / ar; }
+    ctx.drawImage(bmp, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
+  }
+
+  // Bake all frames asynchronously
+  async function bake() {
+    await new Promise(r => {
+      if (video.readyState >= 1) return r();
+      video.addEventListener('loadedmetadata', r, { once: true });
+    });
+    video.pause();
+
+    // Show loading indicator
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    for (let i = 0; i < FRAMES; i++) {
+      video.currentTime = (i / (FRAMES - 1)) * video.duration;
+      await new Promise(r => video.addEventListener('seeked', r, { once: true }));
+      // createImageBitmap stores decoded frame in GPU memory
+      bitmaps.push(await createImageBitmap(video));
+    }
+
+    baked = true;
+    curIdx = 0;
+    drawBitmap(bitmaps[0]);
+  }
+
+  // Scroll handler — just GPU blit, no decode
+  let raf = null;
+  window.addEventListener('scroll', () => {
+    if (!baked || raf) return;
+    raf = requestAnimationFrame(() => {
+      const scrollable = hero.offsetHeight - window.innerHeight;
+      const p   = Math.max(0, Math.min(1, window.scrollY / scrollable));
+      const idx = Math.min(Math.round(p * (FRAMES - 1)), FRAMES - 1);
+      if (idx !== curIdx) { curIdx = idx; drawBitmap(bitmaps[idx]); }
+      const hint = document.getElementById('scroll-hint');
+      if (hint) hint.style.opacity = String(Math.max(1 - p * 10, 0));
+      raf = null;
+    });
+  }, { passive: true });
+
+  video.load();
+  bake();
+}());
+</script>
+</body>
+</html>

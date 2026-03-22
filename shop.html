@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Shop Kip's Card Shop — browse Pokémon, Sports, Magic: The Gathering, graded PSA/BGS slabs, and memorabilia. Los Altos, CA's finest collectible card inventory.">
+  <meta name="keywords" content="buy pokemon cards, sports cards shop, magic the gathering, PSA graded cards, BGS slabs, Los Altos card shop">
+  <meta property="og:title" content="Shop | Kip's Card Shop — Premium Trading Cards">
+  <meta property="og:description" content="Browse our full inventory of Pokémon, Sports, Magic, graded slabs, and memorabilia. In-store and available to order.">
+  <meta property="og:image" content="hero-sealed.jpg">
+  <meta property="og:type" content="website">
+  <title>Shop | Kip's Card Shop — Pokémon, Sports, Magic, Graded Slabs</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+
+<div id="scroll-progress"></div>
+
+<!-- ===================== NAV ===================== -->
+<nav id="nav">
+  <a href="index.html" class="nav-logo">
+    <span class="nav-logo-name">KIP'S</span>
+    <span class="nav-logo-tagline">Card Shop · Los Altos</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="shop.html" class="active">Shop</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="shop.html" class="nav-cta">Shop Now</a>
+    <button class="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ===================== PAGE HERO ===================== -->
+<section class="page-hero">
+  <div class="container">
+    <div class="page-hero-content">
+      <div class="page-hero-eyebrow">Kip's Card Shop</div>
+      <h1 class="display-lg gold-shimmer" style="margin-bottom:16px;">The Shop</h1>
+      <p class="body-lg text-muted" style="max-width:520px;">
+        Hand-curated inventory spanning five categories. Updated weekly with new arrivals, fresh pulls, and graded acquisitions.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SHOP CONTENT ===================== -->
+<section style="padding-bottom:var(--section-pad);">
+  <div class="container">
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <button class="filter-btn active" data-cat="all">All Items</button>
+      <button class="filter-btn" data-cat="pokemon">⚡ Pokémon</button>
+      <button class="filter-btn" data-cat="sports">🏆 Sports</button>
+      <button class="filter-btn" data-cat="magic">✦ Magic</button>
+      <button class="filter-btn" data-cat="graded">🏅 Graded Slabs</button>
+      <button class="filter-btn" data-cat="memorabilia">★ Memorabilia</button>
+      <span class="filter-count">24 items</span>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="product-grid stagger">
+
+      <!-- ===== POKÉMON ===== -->
+      <div class="product-card reveal" data-cat="pokemon">
+        <div class="product-img">
+          <div class="product-img-bg pokemon-bg"></div>
+          <div class="product-img-inner">
+            <span class="product-card-icon">⚡</span>
+            <span class="product-card-label">Booster Box</span>
+          </div>
+          <span class="product-badge hot">🔥 Hot</span>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Pokémon</span>
+          <h3 class="product-name">Scarlet & Violet — Twilight Masquerade Booster Box</h3>
+          <div class="product-footer">
+            <span class="product-price">$139.99</span>
+            <button class="btn-add btn-sm">Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal" data-cat="pokemon">
+        <div class="product-img">
+          <div class="product-img-bg pokemon-bg" style="background:linear-gradient(135deg,#1a0d3e,#2d1a5e,#1a3a5e);"></div>
+          <div class="product-img-inner">
+            <span class="product-card-icon">🌊</span>
+            <span class="product-card-label">Elite Trainer Box</span>
+          </div>
+          <span class="product-badge new">New</span>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Pokémon</span>
+          <h3 class="product-name">Paldean Fates Elite Trainer Box</h3>
+          <div class="product-footer">
+            <span class="product-price">$54.99</span>
+            <button class="btn-add btn-sm">Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal" data-cat="pokemon">
+        <div class="product-img">
+          <div class="product-img-bg pokemon-bg" style="background:linear-gradient(135deg,#3d0d0d,#5e1a1a,#3d1a0d);"></div>
+          <div class="product-img-inner">
+            <span class="product-card-icon">🔥</span>
+            <span class="product-card-label">Premium Collection</span>
+          </div>
+          <span class="product-badge hot">🔥 Hot</span>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Pokémon</span>
+          <h3 class="product-name">Charizard ex Premium Collection Box</h3>
+          <div class="product-footer">
+            <span class="product-price">$89.99</span>
+            <button class="btn-add btn-sm">Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal" data-cat="pokemon">
+        <div class="product-img">
+          <div class="product-img-bg pokemon-bg" style="background:linear-gradient(135deg,#0d2b1a,#1a5e3d,#0d3d1a);"></div>
+          <div class="product-img-inner">
+            <span class="product-card-icon">🌿</span>
+            <span class="product-card-label">Booster Bundle</span>
+          </div>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Pokémon</span>
+          <h3 class="product-name">Pokémon 151 Booster Bundle</h3>
+          <div class="product-footer">
+            <span class="product-price">$39.99</span>
+            <button class="btn-add btn-sm">Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal" data-cat="pokemon">
+        <div class="product-img">
+          <div class="product-img-bg pokemon-bg" style="background:linear-gradient(135deg,#1a1a0d,#3d3d0d,#2b2b1a);"></div>
+          <div class="product-img-inner">
+            <span class="product-card-icon">⭐</span>
+            <span class="product-card-label">Booster Box</span>
+          </div>
+          <span class="product-badge new">New</span>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Pokémon</span>
+          <h3 class="product-name">Stellar Crown Booster Box</h3>
+          <div class="product-footer">
+            <span class="product-price">$124.99</span>
+            <button class="btn-add btn-sm">Add</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== SPORTS ===== -->
+      <div class="product-card reveal" data-cat="sports">
+        <div class="product-img">
+          <div class="product-img-bg sports-bg"></div>
+          <div class="product-img-inner">
+            <span class="product-card-icon">⚾</span>
+            <span class="product-card-label">Hobby Box</span>
+          </div>
+          <span class="product-badge new">New</span>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Sports</span>
+          <h3 class="product-name">2024 Topps Chrome Baseball Hobby Box</h3>
+          <div class="product-footer">
+            <span class="product-price">$219.99</span>
+            <button class="btn-add btn-sm">Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal" data-cat="sports">
+        <div class="product-img">
+          <div class="product-img-bg sports-bg" style="background:linear-gradient(135deg,#0d1a2b,#1a2b3d,#0d2b3d);"></div>
+          <div class="product-img-inner">
+            <span class="product-card-icon">🏀</span>
+            <span class="product-card-label">Blaster Box</span>
+          </div>
+          <span class="product-badge hot">🔥 Hot</span>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Sports</span>
+          <h3 class="product-name">Panini Prizm Basketball Blaster Box</h3>
+          <div class="product-footer">
+            <span class="product-price">$34.99</span>
+            <button class="btn-add btn-sm">Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal" data-cat="sports">
+        <div class="product-img">
+          <div class="product-img-bg sports-bg" style="background:linear-gradient(135deg,#1a0d0d,#3d1a0d,#2b0d0d);"></div>
+          <div class="product-img-inner">
+            <span class="product-card-icon">🏈</span>
+            <span class="product-card-label">Hobby Box</span>
+          </div>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Sports</span>
+          <h3 class="product-name">2023 Donruss Football Hobby Box</h3>
+          <div class="product-footer">
+            <span class="product-price">$149.99</span>
+            <button class="btn-add btn-sm">Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal" data-cat="sports">
+        <div class="product-img">
+          <div class="product-img-bg sports-bg" style="background:linear-gradient(135deg,#0d1a2b,#0d2b3d,#1a3d5e);"></div>
+          <div class="product-img-inner">
+            <span class="product-card-icon">🏒</span>
+            <span class="product-card-label">Series 2</span>
+          </div>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Sports</span>
+          <h3 class="product-name">Upper Deck Hockey Series 2 Hobby Box</h3>
+          <div class="product-footer">
+            <span class="product-price">$84.99</span>
+            <button class="btn-add btn-sm">Add</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== MAGIC ===== -->
+      <div class="product-card reveal" data-cat="magic">
+        <div class="product-img">
+          <div class="product-img-bg magic-bg"></div>
+          <div class="product-img-inner">
+            <span class="product-card-icon">🌸</span>
+            <span class="product-card-label">Draft Booster Box</span>
+          </div>
+          <span class="product-badge new">New</span>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Magic: The Gathering</span>
+          <h3 class="product-name">Bloomburrow Draft Booster Box</h3>
+          <div class="product-footer">
+            <span class="product-price">$109.99</span>
+            <button class="btn-add btn-sm">Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal" data-cat="magic">
+        <div class="product-img">
+          <div class="product-img-bg magic-bg" style="background:linear-gradient(135deg,#1a1a0d,#3d3d1a,#2b2b0d);"></div>
+          <div class="product-img-inner">
+            <span class="product-card-icon">✦</span>
+            <span class="product-card-label">Collector Booster</span>
+          </div>
+          <span class="product-badge hot">🔥 Hot</span>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Magic: The Gathering</span>
+          <h3 class="product-name">Modern Horizons 3 Collector Booster Box</h3>
+          <div class="product-footer">
+            <span class="product-price">$329.99</span>
+            <button class="btn-add btn-sm">Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal" data-cat="magic">
+        <div class="product-img">
+          <div class="product-img-bg magic-bg" style="background:linear-gradient(135deg,#1a0d1a,#3d1a3d,#2b0d2b);"></div>
+          <div class="product-img-inner">
+            <span class="product-card-icon">🏚</span>
+            <span class="product-card-label">Bundle</span>
+          </div>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Magic: The Gathering</span>
+          <h3 class="product-name">Duskmourn: House of Horror Bundle</h3>
+          <div class="product-footer">
+            <span class="product-price">$44.99</span>
+            <button class="btn-add btn-sm">Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal" data-cat="magic">
+        <div class="product-img">
+          <div class="product-img-bg magic-bg" style="background:linear-gradient(135deg,#0d0d1a,#1a1a3d,#0d0d2b);"></div>
+          <div class="product-img-inner">
+            <span class="product-card-icon">⚔️</span>
+            <span class="product-card-label">Commander Set</span>
+          </div>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Magic: The Gathering</span>
+          <h3 class="product-name">Commander Masters Precon Set (4 decks)</h3>
+          <div class="product-footer">
+            <span class="product-price">$159.99</span>
+            <button class="btn-add btn-sm">Add</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== GRADED SLABS ===== -->
+      <div class="product-card reveal" data-cat="graded">
+        <div class="product-img">
+          <div class="product-img-bg graded-bg"></div>
+          <div class="product-img-inner">
+            <span class="product-card-icon" style="font-size:28px;color:#FFD700;font-family:var(--font-display);">PSA 10</span>
+            <span class="product-card-label">Gem Mint</span>
+          </div>
+          <span class="product-badge rare">Rare</span>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Graded Slabs</span>
+          <h3 class="product-name">Charizard VMAX Alt Art PSA 10 (2021)</h3>
+          <div class="product-footer">
+            <span class="product-price">$1,199.99</span>
+            <button class="btn-add btn-sm">Inquire</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal" data-cat="graded">
+        <div class="product-img">
+          <div class="product-img-bg graded-bg" style="background:linear-gradient(135deg,#1a0d0d,#2a1a1a,#3a2020);"></div>
+          <div class="product-img-inner">
+            <span class="product-card-icon" style="font-size:28px;color:#f58080;font-family:var(--font-display);">BGS 9.5</span>
+            <span class="product-card-label">Gem Mint</span>
+          </div>
+          <span class="product-badge rare">Rare</span>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Graded Slabs</span>
+          <h3 class="product-name">LeBron James Rookie Chrome Refractor BGS 9.5</h3>
+          <div class="product-footer">
+            <span class="product-price">$1,499.99</span>
+            <button class="btn-add btn-sm">Inquire</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal" data-cat="graded">
+        <div class="product-img">
+          <div class="product-img-bg graded-bg" style="background:linear-gradient(135deg,#0d1a0d,#1a2a1a,#203020);"></div>
+          <div class="product-img-inner">
+            <span class="product-card-icon" style="font-size:28px;color:#5fd4a0;font-family:var(--font-display);">CGC 10</span>
+            <span class="product-card-label">Pristine</span>
+          </div>
+          <span class="product-badge rare">Rare</span>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Graded Slabs</span>
+          <h3 class="product-name">Steph Curry Bowman Chrome Gold RC CGC 10 /50</h3>
+          <div class="product-footer">
+            <span class="product-price">$2,199.99</span>
+            <button class="btn-add btn-sm">Inquire</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal" data-cat="graded">
+        <div class="product-img">
+          <div class="product-img-bg graded-bg" style="background:linear-gradient(135deg,#1a1a0d,#2a2a1a,#333320);"></div>
+          <div class="product-img-inner">
+            <span class="product-card-icon" style="font-size:28px;color:#FFD700;font-family:var(--font-display);">PSA 9</span>
+            <span class="product-card-label">Mint</span>
+          </div>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Graded Slabs</span>
+          <h3 class="product-name">Machamp 1st Edition Holo Base Set PSA 9</h3>
+          <div class="product-footer">
+            <span class="product-price">$449.99</span>
+            <button class="btn-add btn-sm">Inquire</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== MEMORABILIA ===== -->
+      <div class="product-card reveal" data-cat="memorabilia">
+        <div class="product-img">
+          <div class="product-img-bg memorabilia-bg"></div>
+          <div class="product-img-inner">
+            <span class="product-card-icon">⚾</span>
+            <span class="product-card-label">Game-Used</span>
+          </div>
+          <span class="product-badge rare">Rare</span>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Memorabilia</span>
+          <h3 class="product-name">Mike Trout Game-Used Jersey Card /10</h3>
+          <div class="product-footer">
+            <span class="product-price">$399.99</span>
+            <button class="btn-add btn-sm">Inquire</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal" data-cat="memorabilia">
+        <div class="product-img">
+          <div class="product-img-bg memorabilia-bg" style="background:linear-gradient(135deg,#1a0d0d,#2b1a0d,#3d2b0d);"></div>
+          <div class="product-img-inner">
+            <span class="product-card-icon">🏀</span>
+            <span class="product-card-label">Autograph Card</span>
+          </div>
+          <span class="product-badge rare">Rare</span>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Memorabilia</span>
+          <h3 class="product-name">Kobe Bryant Panini Autograph Card /24</h3>
+          <div class="product-footer">
+            <span class="product-price">$799.99</span>
+            <button class="btn-add btn-sm">Inquire</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal" data-cat="memorabilia">
+        <div class="product-img">
+          <div class="product-img-bg memorabilia-bg" style="background:linear-gradient(135deg,#0d1a0d,#1a2b0d,#0d3d1a);"></div>
+          <div class="product-img-inner">
+            <span class="product-card-icon">🥊</span>
+            <span class="product-card-label">Signed Program</span>
+          </div>
+          <span class="product-badge rare">Rare</span>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Memorabilia</span>
+          <h3 class="product-name">Muhammad Ali Signed Fight Program — JSA</h3>
+          <div class="product-footer">
+            <span class="product-price">$999.99</span>
+            <button class="btn-add btn-sm">Inquire</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal" data-cat="memorabilia">
+        <div class="product-img">
+          <div class="product-img-bg memorabilia-bg" style="background:linear-gradient(135deg,#1a0d1a,#2b0d2b,#3d1a2b);"></div>
+          <div class="product-img-inner">
+            <span class="product-card-icon">🏀</span>
+            <span class="product-card-label">Signed Ball</span>
+          </div>
+        </div>
+        <div class="product-info">
+          <span class="product-cat">Memorabilia</span>
+          <h3 class="product-name">Steph Curry Signed Official NBA Basketball — BAS</h3>
+          <div class="product-footer">
+            <span class="product-price">$599.99</span>
+            <button class="btn-add btn-sm">Inquire</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- /product-grid -->
+
+  </div>
+</section>
+
+<!-- ===================== NEWSLETTER ===================== -->
+<section class="section newsletter-section">
+  <div class="container">
+    <div class="newsletter-inner">
+      <div class="reveal-left">
+        <p class="section-subtitle">Never Miss a Drop</p>
+        <h2 class="section-title" style="margin-bottom:16px;">Join the Inner Circle</h2>
+        <p class="body-lg text-muted" style="margin-bottom:32px;">
+          Get notified about new arrivals before they go public. Graded slab acquisitions, booster releases, and collection buyout alerts.
+        </p>
+        <form class="newsletter-form" onsubmit="return false;">
+          <input type="email" placeholder="your@email.com" required>
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+      <div class="reveal-right" style="text-align:center; padding:40px 0;">
+        <div style="font-family:var(--font-display); font-size:64px; color:var(--color-accent); margin-bottom:12px;">Need Help?</div>
+        <p class="text-muted" style="margin-bottom:24px; max-width:280px; margin-left:auto; margin-right:auto;">
+          Not sure what you're looking for? Our experts can help you find the right card for your collection or budget.
+        </p>
+        <a href="contact.html" class="btn btn-outline btn-arrow">Talk to an Expert</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer id="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo-name">KIP'S</div>
+        <div class="footer-logo-sub">Card Shop · Est. 2009</div>
+        <p class="footer-desc">
+          Los Altos, California's premier destination for trading cards and collectibles.
+        </p>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram">📷</a>
+          <a href="#" aria-label="Twitter">𝕏</a>
+          <a href="#" aria-label="Facebook">f</a>
+          <a href="#" aria-label="YouTube">▶</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Categories</h4>
+        <ul>
+          <li><a href="shop.html?cat=pokemon">Pokémon</a></li>
+          <li><a href="shop.html?cat=sports">Sports Cards</a></li>
+          <li><a href="shop.html?cat=magic">Magic: The Gathering</a></li>
+          <li><a href="shop.html?cat=graded">Graded Slabs</a></li>
+          <li><a href="shop.html?cat=memorabilia">Memorabilia</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Store</h4>
+        <ul>
+          <li><a href="about.html">Our Story</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="contact.html">Grading Services</a></li>
+          <li><a href="contact.html">Sell Your Collection</a></li>
+        </ul>
+      </div>
+      <div class="footer-col footer-address">
+        <h4>Visit Us</h4>
+        <p>
+          <strong>321 State Street</strong><br>
+          Los Altos, CA 94022<br>
+          <br>
+          <strong>(650) 555-0192</strong>
+        </p>
+        <div class="footer-hours">
+          <div class="footer-hours-row"><span class="day">Mon – Thu</span><span class="time">10am – 7pm</span></div>
+          <div class="footer-hours-row"><span class="day">Fri – Sat</span><span class="time">10am – 8pm</span></div>
+          <div class="footer-hours-row"><span class="day">Sunday</span><span class="time">11am – 6pm</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Kip's Card Shop. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Shipping & Returns</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="js/shop.js"></script>
+
+</body>
+</html>
