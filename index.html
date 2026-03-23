@@ -8,6 +8,43 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="kips-logo.png">
+  <style>
+    /* Force favicon-linked image to white — applied via CSS filter on a hidden canvas trick */
+  </style>
+  <script>
+    // Create white version of favicon at runtime
+    window.addEventListener('DOMContentLoaded', () => {
+      const img = new Image();
+      img.onload = () => {
+        const c = document.createElement('canvas');
+        c.width = 64; c.height = 64;
+        const ctx = c.getContext('2d');
+        // Navy background
+        ctx.fillStyle = '#1B2B6B';
+        ctx.fillRect(0, 0, 64, 64);
+        // Draw logo white via compositing
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.drawImage(img, 0, 0, 64, 64);
+        ctx.globalCompositeOperation = 'destination-over';
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, 64, 64);
+        // Reset and draw navy bg + white logo
+        const c2 = document.createElement('canvas');
+        c2.width = 64; c2.height = 64;
+        const ctx2 = c2.getContext('2d');
+        ctx2.fillStyle = '#1B2B6B';
+        ctx2.fillRect(0, 0, 64, 64);
+        ctx2.globalCompositeOperation = 'source-over';
+        // Use filter to invert the black logo to white
+        ctx2.filter = 'invert(1)';
+        ctx2.drawImage(img, 0, 0, 64, 64);
+        const link = document.querySelector("link[rel='icon']");
+        if (link) link.href = c2.toDataURL('image/png');
+      };
+      img.src = 'kips-logo.png';
+    });
+  </script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -80,6 +117,11 @@
       position: absolute; bottom: 44px; left: 0; right: 0;
       text-align: center; z-index: 5; pointer-events: none;
       animation: fadeUp 0.8s ease 0.3s both;
+    }
+    @media(max-width:768px) {
+      #hero-text { bottom: 24px; }
+      #hero-text h1 { font-size: clamp(28px, 8vw, 42px); }
+      #hero-text p  { font-size: 10px; letter-spacing: 0.2em; }
     }
     #hero-text h1 {
       font-family: 'Bebas Neue', sans-serif;
@@ -189,6 +231,7 @@
 <!-- NAV -->
 <nav id="nav">
   <a href="index.html" class="nav-logo">KIP'S<span>Card Shop · Los Altos</span></a>
+  </a>
   <ul class="nav-links" id="nav-links">
     <li><a href="index.html" class="active">Home</a></li>
     <li><a href="#carry">What We Carry</a></li>
@@ -397,13 +440,26 @@ const revealObs = new IntersectionObserver(entries => {
 }, { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
-// ── SCROLL ANIMATION — works on desktop AND mobile ──
+// ── SCROLL ANIMATION — desktop only, static image on mobile ──
 (function () {
   const video = document.getElementById('hero-video');
   const hero  = document.getElementById('hero');
   if (!video || !hero) return;
 
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  const isMobile = window.innerWidth <= 768 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+  // On mobile: skip animation entirely, show static image + shrink hero height
+  if (isMobile) {
+    hero.style.height = '100vh';
+    video.style.display = 'none';
+    const img = document.createElement('img');
+    img.src = 'hero-sealed.jpeg';
+    img.alt = 'Kip\'s Card Shop';
+    img.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;object-fit:contain;background:#fff;';
+    document.getElementById('hero-sticky').insertBefore(img, document.getElementById('hero-text'));
+    document.getElementById('scroll-hint').style.display = 'none';
+    return;
+  }
   const FRAMES   = isMobile ? 40 : 90; // fewer frames on mobile = faster bake
   const bitmaps  = [];
   let baked  = false;
