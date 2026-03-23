@@ -397,39 +397,39 @@ const revealObs = new IntersectionObserver(entries => {
 }, { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
-// ── FRAME-BAKED SCROLL ANIMATION ──
-// Pre-bakes every frame into GPU-resident ImageBitmap objects at load time.
-// On scroll, drawImage() from GPU memory = zero decode lag, silky smooth.
+// ── SCROLL ANIMATION — works on desktop AND mobile ──
 (function () {
-  const video   = document.getElementById('hero-video');
-  const hero    = document.getElementById('hero');
+  const video = document.getElementById('hero-video');
+  const hero  = document.getElementById('hero');
   if (!video || !hero) return;
 
-  const FRAMES  = 90; // 90 frames across 280vh = smooth
-  const bitmaps = [];
-  let   baked   = false;
-  let   curIdx  = -1;
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  const FRAMES   = isMobile ? 40 : 90; // fewer frames on mobile = faster bake
+  const bitmaps  = [];
+  let baked  = false;
+  let curIdx = -1;
 
-  // --- Canvas setup ---
-  const canvas  = document.createElement('canvas');
-  const ctx     = canvas.getContext('2d');
+  // Canvas replaces the video element visually
+  const canvas = document.createElement('canvas');
+  const ctx    = canvas.getContext('2d');
   canvas.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;background:#fff;';
-  // Insert canvas; hide video element
-  video.style.display = 'none';
+  video.style.display  = 'none';
   video.parentNode.insertBefore(canvas, video);
 
   function resize() {
     canvas.width  = window.innerWidth;
     canvas.height = window.innerHeight;
+    // Redraw current frame after resize
+    if (bitmaps[curIdx]) drawFrame(curIdx);
   }
   resize();
   window.addEventListener('resize', resize, { passive: true });
 
-  // Draw a bitmap centered on white
-  function drawBitmap(bmp) {
+  function drawFrame(idx) {
+    const bmp = bitmaps[idx];
+    if (!bmp) return;
     ctx.fillStyle = '#fff';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    if (!bmp) return;
     const cw = canvas.width, ch = canvas.height;
     const ar = bmp.width / bmp.height;
     let dw, dh;
@@ -438,31 +438,55 @@ document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
     ctx.drawImage(bmp, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
   }
 
-  // Bake all frames asynchronously
+  // Off-screen canvas for mobile fallback (drawImage instead of createImageBitmap)
+  const off    = document.createElement('canvas');
+  const offCtx = off.getContext('2d');
+
+  async function bakeFrame(i) {
+    video.currentTime = (i / (FRAMES - 1)) * video.duration;
+    await new Promise(r => video.addEventListener('seeked', r, { once: true }));
+    try {
+      // Desktop: GPU-resident ImageBitmap — fastest possible
+      bitmaps.push(await createImageBitmap(video));
+    } catch (e) {
+      // Mobile fallback: draw to off-screen canvas and snapshot
+      if (off.width !== video.videoWidth) {
+        off.width  = video.videoWidth;
+        off.height = video.videoHeight;
+      }
+      offCtx.drawImage(video, 0, 0);
+      // Store as ImageBitmap if possible, else keep canvas reference
+      try {
+        bitmaps.push(await createImageBitmap(off));
+      } catch (e2) {
+        // Last resort: store a plain canvas snapshot
+        const snap = document.createElement('canvas');
+        snap.width  = off.width;
+        snap.height = off.height;
+        snap.getContext('2d').drawImage(off, 0, 0);
+        bitmaps.push(snap);
+      }
+    }
+  }
+
   async function bake() {
     await new Promise(r => {
       if (video.readyState >= 1) return r();
       video.addEventListener('loadedmetadata', r, { once: true });
     });
     video.pause();
-
-    // Show loading indicator
     ctx.fillStyle = '#fff';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     for (let i = 0; i < FRAMES; i++) {
-      video.currentTime = (i / (FRAMES - 1)) * video.duration;
-      await new Promise(r => video.addEventListener('seeked', r, { once: true }));
-      // createImageBitmap stores decoded frame in GPU memory
-      bitmaps.push(await createImageBitmap(video));
+      await bakeFrame(i);
     }
 
-    baked = true;
+    baked  = true;
     curIdx = 0;
-    drawBitmap(bitmaps[0]);
+    drawFrame(0);
   }
 
-  // Scroll handler — just GPU blit, no decode
   let raf = null;
   window.addEventListener('scroll', () => {
     if (!baked || raf) return;
@@ -470,7 +494,7 @@ document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
       const scrollable = hero.offsetHeight - window.innerHeight;
       const p   = Math.max(0, Math.min(1, window.scrollY / scrollable));
       const idx = Math.min(Math.round(p * (FRAMES - 1)), FRAMES - 1);
-      if (idx !== curIdx) { curIdx = idx; drawBitmap(bitmaps[idx]); }
+      if (idx !== curIdx) { curIdx = idx; drawFrame(idx); }
       const hint = document.getElementById('scroll-hint');
       if (hint) hint.style.opacity = String(Math.max(1 - p * 10, 0));
       raf = null;
